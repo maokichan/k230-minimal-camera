@@ -44,7 +44,8 @@ const isPlaceholderValue = (v) => /^<[^<>]*>$/.test(v)
 
 const ABS_EXT = /\.(md|txt|json|yml|yaml|toml|ps1|sh)$/
 const KEY_EXT = /\.(md|txt|json|yml|yaml|toml|mjs|cjs|ts|tsx|py|sh|ps1)$/
-const EXCLUDED_PREFIX = ['trash/']
+// trash/ 与 docs/research/ref/（外部原始资料存档）豁免：存档不改写、不重扫（见决策笔记）
+const EXCLUDED_PREFIX = ['trash/', 'docs/research/ref/']
 
 const tracked = execSync('git ls-files', { encoding: 'utf8' })
   .split('\n')

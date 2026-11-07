@@ -27,11 +27,13 @@ const red = (s) => paint(s, '31')
 const green = (s) => paint(s, '32')
 const yellow = (s) => paint(s, '33')
 
+/** 被扫描文档：全部 git 追踪 .md；trash 与 docs/research/ref/ 外部存档豁免（存档不改写，见决策笔记） */
+const ARCHIVE_PREFIXES = ['trash/', 'docs/research/ref/']
 const trackedMd = () =>
   execSync('git ls-files -- "*.md"', { encoding: 'utf8' })
     .split('\n')
     .map((p) => p.trim())
-    .filter((p) => p.endsWith('.md') && p !== '' && !p.startsWith('trash/'))
+    .filter((p) => p.endsWith('.md') && p !== '' && !ARCHIVE_PREFIXES.some((pre) => p.startsWith(pre)))
 
 const dirOf = (rel) => {
   const d = dirname(rel).split(sep).join('/')

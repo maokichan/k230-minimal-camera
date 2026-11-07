@@ -8,7 +8,7 @@
  * 本脚本 = 域 `doc`（文档治理）+ 动作 `Guard`。机制参照 cross-patch，实现参照 TuRead 同名脚本。
  *
  * ── 用途 ──
- * 扫描 git 追踪的全部 Markdown（trash/ 留档除外），逐文件比对行数与上限表，超限即挡。
+ * 扫描 git 追踪的全部 Markdown（trash/ 与 docs/research/ref/ 外部存档除外），逐文件比对行数与上限表，超限即挡。
  * `node ops/scripts/docGuard.mjs` = 门控（hook 调的就是它）；`--report` = 体检报告，只打印不挡。
  *
  * ── 目的 ──
@@ -43,11 +43,12 @@ const DOC_LIMITS = {
 /** 未登记文档的默认上限 */
 const DEFAULT_LIMIT = 300
 
-/** git 追踪的全部 .md（含暂存区新文件；trash 之外不会混进别的） */
+/** git 追踪的全部 .md（含暂存区新文件；trash 与 docs/research/ref/ 外部存档豁免，见决策笔记） */
+const ARCHIVE_PREFIXES = ['trash/', 'docs/research/ref/']
 const tracked = execSync('git ls-files -- "*.md"', { encoding: 'utf8' })
   .split('\n')
   .map((p) => p.trim())
-  .filter((p) => p.endsWith('.md') && p !== '' && !p.startsWith('trash/'))
+  .filter((p) => p.endsWith('.md') && p !== '' && !ARCHIVE_PREFIXES.some((pre) => p.startsWith(pre)))
 
 const linesOf = (p) => {
   const text = readFileSync(p, 'utf8')

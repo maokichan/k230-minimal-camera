@@ -18,6 +18,7 @@
 人类的绕行特权，agent 不用——门控为纪律而设，不是安全机制。提交身份用 git 自带的
 （user.name/email），不设 identity 门控（决策见 [.agents/notes/](../.agents/notes/README.md)）。
 体检：各脚本 `--report` / `check`。
+存档豁免：`docs/research/ref/`（外部原始资料，不改写）与 `trash/` 同待遇，三守卫不扫——豁免本身也是决策笔记。
 
 ## 路径红线（repoGuard 的口径依据）
 
